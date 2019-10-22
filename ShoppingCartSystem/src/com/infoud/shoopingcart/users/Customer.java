@@ -1,18 +1,25 @@
 package com.infoud.shoopingcart.users;
 
-import java.util.List;
+import java.io.IOException;
 import java.util.Objects;
 
 import com.infoud.shoopingcart.cart.Order;
 import com.infoud.shoopingcart.cart.OrderFunctions;
-import com.infoud.shoopingcart.cart.OrderRequest;
+import com.infoud.shoopingcart.orderOperations.CreateOrder;
+import com.infoud.shoopingcart.orderOperations.DeleteOrders;
+import com.infoud.shoopingcart.orderOperations.GetOrderByID;
+import com.infoud.shoopingcart.orderOperations.ViewPlacedOrders;
 
 public class Customer  extends User{
  private String customerid;
  private String customerName;
  private String address;
- OrderRequest orderRequest=new OrderRequest();
-OrderFunctions orderFunctions=new OrderFunctions();
+ //OrderRequest orderRequest=new OrderRequest();
+ OrderFunctions orderFunctions=new OrderFunctions();
+ GetOrderByID getOrderByID=new GetOrderByID();
+ CreateOrder createOrder=new CreateOrder();
+ ViewPlacedOrders viewPlacedOrders=new ViewPlacedOrders();
+DeleteOrders deleteOrders=new DeleteOrders();
 
 
 
@@ -72,22 +79,29 @@ public void setCustomerid(String customerid) {
 	this.customerid = customerid;
 }
 public void createOrder( String pid) {
-   orderRequest.orderRequests(pid);
+   //orderRequest.orderRequests(pid);
    System.out.println("order created");
 }
+
+	
+	 
+	 
+public void  buyProduct(Order order) {
+
+// orderFunctions.requestOrder(order);	
+ createOrder.requestOrder(order);
+}
+public void vieworderRequests() throws IOException {
+	
+		//orderFunctions.viewRequestedOrders();
+	viewPlacedOrders.viewPlacedOrder();
+	
+}
+
 
 	/*
 	 * public List<Order> addrequest(Order order) {
 	 * List<Order>order1=orderFunctions.requestOrder(order1);
 	 * System.out.println("your order is placed"); return order1; }
 	 */
-public List<Order> buyProduct(Order order) {
-
-List<Order> reqorder = orderFunctions.requestOrder(order);
-// System.out.println("product:" + products);
-return reqorder;
 }
-public void orderRequests() {
-	//orderRequest.viewRequestedOrders();
-		orderFunctions.viewRequestedOrders();
-}}

@@ -1,27 +1,29 @@
 package com.infoud.shoopingcart.cart;
 
-import java.util.ArrayList;
-import java.util.List;
 
+
+import java.io.IOException;
+
+import com.infoud.shoopingcart.userfunctions.UsersFunctions;
 import com.infoud.shoopingcart.users.Admin;
 import com.infoud.shoopingcart.users.Customer;
 import com.infoud.shoopingcart.users.Employee;
-import com.infoud.shoopingcart.users.User;
 
 public class MainUI {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		Admin a = new Admin("admin1", "admin", "admin", "password");
+		a.addnewEmployee("emp4","nikita@123","nikita");
 		Employee e = new Employee("emp1", "employee", "emp1", "ravina", "andheri", 20000);
-
-		/*
-		 * UsersFunctions usersFunctions=new UsersFunctions();
-		 * usersFunctions.addUsers(a); usersFunctions.addUsers(e);
-		 * usersFunctions.print(usersFunctions.groupByRole());
-		 * System.out.println(usersFunctions.getUserlist());
-		 */
-
+		
+		
+		  UsersFunctions usersFunctions=new UsersFunctions();
+		  usersFunctions.addUsers(a);
+		  usersFunctions.addUsers(e);
+		 
+		 
+		
 		Shirts shirts = new Shirts();
 		shirts.setPid("2");
 		shirts.setName("tshirts");
@@ -30,11 +32,13 @@ public class MainUI {
 		shirts.setSize("small");
 		shirts.setColor("grey");
 		shirts.setType("plain");
+		shirts.setQuantity(20);
 
 		Laptops laptops = new Laptops();
 		laptops.setPid("1");
 		laptops.setName("laptop");
 		laptops.setPrice(30000.00);
+		laptops.setQuantity(25);
 		laptops.setSpecification("4GBRAM");
 		laptops.setWarranty("2yrs");
 		laptops.setModel("dell");
@@ -46,52 +50,69 @@ public class MainUI {
 		jeans.setBrand("Roadster");
 		jeans.setSize("small");
 		jeans.setColor("grey");
+		jeans.setQuantity(15);
 		jeans.setJeans_Type("plain");
+		
 		// ---adding products---?
 		a.additems(shirts);
 		a.additems(jeans);
 		a.additems(laptops);
+		
 		// view product list
-		a.viewcart();
+	a.showallproductsinCart();
+	     
+		 //a.viewcart();
 		// deleting products
 		a.deleteitems("3");
-		a.viewcart();
-		// a.viewcart();
-		/*
-		 * System.out.println("Products adding:"+"\nproduct added");
-		 * System.out.println("Products adding:"+ +"\nproduct added");
-		 * System.out.println("Products adding:"++"\nproduct added");
-		 */// a.viewcart();
-		// a.
-		// a.deleteitems("2");
-
-		// product.add(shirts);
-
-		Customer customer = new Customer("customer1", "customer", "customer123", "prajkta", "badla");
+	//	a.viewcart();
 		
-		//create order
+	    // a.deleteitems("2");
+
+		
+
+		
+		  Customer customer = new Customer("customer1", "customer", "customer123",
+		  "prajkta", "badla");
+		  usersFunctions.addUsers(customer);
+		  
+		  //create order 
+		
 		Order o = new Order();
-		
-		// o.setCustomer(customer);
+
+		o.setCustomer(customer);
 		o.setOrderid("1");
 		o.setProduct(jeans);
+
+		Customer customer1 = new Customer("customer2", "customer", "customer1234", "deepali", "kandivali");
+		usersFunctions.addUsers(customer1);
 		Order o2 = new Order();
+		o.setCustomer(customer);
 		o2.setOrderid("2");
 		o2.setProduct(shirts);
+		 
+		  
+		  //create requests
+		  customer.buyProduct(o); 
+	  customer.buyProduct(o2);
+		  
+		  // print requestorders 
+		  customer.vieworderRequests(); 
+		  
+		 // Employee selling product
+		  
+		  e.sellProduct("2"); //
+		  e.showsellproducts();
+		  // print requestorders 
+		  customer.vieworderRequests(); 
+	
+		  //show userslistbyrole
+		  a.name();
+		  //
+		  
+		  //a.viewcart();
 		
-		//create requests
-		customer.buyProduct(o);
-		customer.buyProduct(o2);
-		// customer.createOrder("1");
-		// customer.orderRequests();
-
-		// print requestorders
-		customer.orderRequests();
-
-		// function for sellimg product
-		e.sellProduct("2");
-		customer.orderRequests();
-
+		
+		// System.out.println(Storage.userlist);
 	}
 
 }

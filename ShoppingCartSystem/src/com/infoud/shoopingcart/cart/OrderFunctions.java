@@ -1,8 +1,13 @@
 package com.infoud.shoopingcart.cart;
 
-import java.util.List;
 
-public class OrderFunctions extends Storage {
+import java.util.Map;
+import java.util.Map.Entry;
+
+import com.infoud.shoopingcart.productoperations.ProductFunctions;
+
+public class OrderFunctions  {
+	ProductFunctions productFunctions=new ProductFunctions();
 
 	/*
 	 * public void orders(String pid) {
@@ -12,54 +17,69 @@ public class OrderFunctions extends Storage {
 	 * orderlist.add(orderRequest(pid)); }
 	 */
 
-	public List<Order> requestOrder(Order order) {
-		System.out.println(order+"is adding");
-		orderlist.add(order);
-		return orderlist;
+	public void requestOrder(Order order) {
+		//System.out.println(order+"is adding");
+		order.setStatus("pending");
+		Storage.orderlist.put(order.getOrderid(),order);
+		
 
 	}
 
 	public void viewRequestedOrders() {
-		System.out.println("Requested order::");
-		for (Order order : orderlist) {
-			System.out.println("\t" + order);
-		}
-	}
+		System.out.println("Requested orders:");
+		 for (Entry<String, Order> entry : Storage.orderlist.entrySet()) {
+	    	   
+	    	               System.out.println("product id"+entry.getKey()+"product details"+entry.getValue());
+	    	                
+	    	             }
+	    	          }
+	    	          
+		
+	
 
-	public Order getOrderById(String orderId) {
-System.out.println("orderId"+orderId);
-		Order order = null;
-		//List<Order> oList =orderlist;
-		System.out.println(orderlist);
-		for (Order o1 : orderlist) {
-			System.out.println(o1);
-			if (o1.getOrderid().equals(orderId)) {
-				System.out.println("equal");
-				order = o1;
-				break;
-			}
-		}
+	
+	
+	public void removeOrderByID(String orderId) {
+		Order order1 = getOrderById(orderId);
 
-		return order;
-
-	}
-
-	public void removeOrderByPID(String orderId) {
-		System.out.println("order to delete:"+getOrderById(orderId));
-		Order order = getOrderById(orderId);
-		deleteOrder(order);
+		deleteOrder(order1);
 	}
 
 	private void deleteOrder(Order order) {
-		orderlist.remove(order);
-		
+
+		Storage.orderlist.remove(order.getOrderid());
 	}
-	public List<Order> processOrder(String orderid) {
-	System.out.println("order to be deleted:"+getOrderById(orderid));
-		//sellproductlist.add(getOrderById(orderid));
-		removeOrderByPID(orderid);
+
+	public Order getOrderById(String orderId) {
+
+		Order order = null;
+		Map<String, Order> order1 = Storage.getOrderlist();
+	       for (Entry<String, Order> entry : order1.entrySet()) {
+	    	   if(entry.getKey().equals(orderId)) {
+
+	    	   order = entry.getValue();
+	    	               System.out.println("product:+"+order);
+	    	                  break;
+	    	              }
+	    	          }
+	    	          
 		
-		return sellproductlist;
+
+		return order;
+	}
+
+	public void processOrder(String orderid) {
+		Order order = getOrderById(orderid);
+	System.out.println("order to be deleted:"+order);
+	    Product product= productFunctions.getProductByProductID(order.getProduct().getPid());
+	    productFunctions.productUpdate(product,1);
+	    order.setStatus("completed");
+	    Storage.sellproductlist.put(product.getPid(), product);
+	    
+		//sellproductlist.add(getOrderById(orderid));
+		removeOrderByID(orderid);
+		
+		
 
 	}
 }

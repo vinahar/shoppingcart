@@ -1,7 +1,5 @@
 package com.infoud.shoopingcart.users;
 
-import java.util.Objects;
-
 import com.infoud.shoopingcart.cart.Storage;
 
 public class User {
@@ -36,7 +34,10 @@ public class User {
 		}
 		@Override
 		public int hashCode() {
-			return Objects.hash(role, user_id);
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + ((role == null) ? 0 : role.hashCode());
+			return result;
 		}
 		@Override
 		public boolean equals(Object obj) {
@@ -47,7 +48,13 @@ public class User {
 			if (getClass() != obj.getClass())
 				return false;
 			User other = (User) obj;
-			return Objects.equals(role, other.role) && Objects.equals(user_id, other.user_id);
+			if (role == null) {
+				if (other.role != null)
+					return false;
+			} else if (!role.equals(other.role))
+				return false;
+			return true;
 		}
+		
 		
 }

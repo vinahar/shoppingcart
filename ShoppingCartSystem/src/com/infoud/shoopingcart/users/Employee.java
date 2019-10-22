@@ -2,12 +2,25 @@ package com.infoud.shoopingcart.users;
 
 import java.util.Objects;
 
-import com.infoud.shoopingcart.cart.OrderFunctions;
+import com.infoud.shoopingcart.cart.Report;
+import com.infoud.shoopingcart.orderOperations.ProcessOrders;
 
 public class Employee extends  User{
 
 	private String emp_id;
-	OrderFunctions orderFunctions=new OrderFunctions();
+	private ProcessOrders processOrders=new ProcessOrders();
+	private Report report=new Report();
+	/**
+	 * @param user_id
+	 * @param role
+	 * @param emp_id
+	 * @param emp_name
+	 */
+	public Employee(String user_id, String role, String emp_id, String emp_name) {
+		super(user_id, role);
+		this.emp_id = emp_id;
+		this.emp_name = emp_name;
+	}
 	public Employee(String userid,String userrole ,String emp_id, String emp_name, String empaddress, double salary) {
 		super(userid, userrole);
 		this.emp_id = emp_id;
@@ -63,17 +76,34 @@ public class Employee extends  User{
 				&& Objects.equals(empaddress, other.empaddress)
 				&& Double.doubleToLongBits(salary) == Double.doubleToLongBits(other.salary);
 	}
-	public void sellProduct(String pid) {
+	public void sellProduct(String orderid) {
 		// TODO Auto-generated method stub
-		orderFunctions.processOrder(pid);
+		
+		
+			//orderFunctions.processOrder(orderid);
+		processOrders.processOrder(orderid);	
+		
+		//productFunctions.
 		//System.out.println(orderFunctions.processOrder(pid));
 		
 	}
+	/**
+	 * @param user_id
+	 * @param role
+	 */
+	public Employee(String user_id, String role) {
+		super(user_id, "Employee");
+	}
 	@Override
 	public String toString() {
-		return "Employee [emp_id=" + emp_id + ", orderFunctions=" + orderFunctions + ", emp_name=" + emp_name
-				+ ", empaddress=" + empaddress + ", salary=" + salary + "]";
+		return "Employee [emp_id=" + emp_id + ", emp_name=" + emp_name + ", empaddress=" + empaddress + ", salary="
+				+ salary + "]";
 	}
+	
+	public void showsellproducts() {
+		report.viewSaleReport();
+	}
+	
 
 	
 }

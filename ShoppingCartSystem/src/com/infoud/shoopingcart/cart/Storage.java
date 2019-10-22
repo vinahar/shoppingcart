@@ -1,60 +1,51 @@
 package com.infoud.shoopingcart.cart;
 
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.HashMap;
+
+import java.util.Map;
 
 import com.infoud.shoopingcart.users.User;
 
-public class Storage {
+public  class Storage {
 	
-	List<Product> cart = new ArrayList<Product>();
-	List<Order> orderlist = new ArrayList<Order>();
-	List<Order> sellproductlist = new ArrayList<Order>();
-	List<User> userlist = new ArrayList<User>();
-	
-	public List<Product> getCart() {
-		//System.out.println("getting the card");
+	public static Map<String, Product> getCart() {
 		return cart;
-
 	}
-
-	public void setCart(List<Product> cart) {
-		this.cart = cart;
-
+	public static void setCart(Map<String, Product> cart) {
+		Storage.cart = cart;
 	}
-
-	public List<Order> getOrderlist() {
+	public static Map<String, Order> getReuestorderlist() {
+		return reuestorderlist;
+	}
+	public static void setReuestorderlist(Map<String, Order> reuestorderlist) {
+		Storage.reuestorderlist = reuestorderlist;
+	}
+	public static Map<String, Order> getOrderlist() {
 		return orderlist;
 	}
-
-	public void setOrderlist(List<Order> orderlist) {
-		this.orderlist = orderlist;
+	public static void setOrderlist(Map<String, Order> orderlist) {
+		Storage.orderlist = orderlist;
 	}
-
-	public List<Order> sellproductlist() {
+	public static Map<String, Product> getSellproductlist() {
 		return sellproductlist;
 	}
-
-	public void sellproductlist(List<Order> sellproductlist) {
-		this.sellproductlist = sellproductlist;
+	public static void setSellproductlist(Map<String, Product> sellproductlist) {
+		Storage.sellproductlist = sellproductlist;
 	}
-
-	public List<User> getUserlist() {
+	public static Map<String, User> getUserlist() {
 		return userlist;
 	}
-
-	public void setUserlist(List<User> userlist) {
-		this.userlist = userlist;
+	public static void setUserlist(Map<String, User> userlist) {
+		Storage.userlist = userlist;
 	}
-
-	@Override
-	public String toString() {
-		return "Storage [cart=" + cart + "]";
-	}
-
-	public void print() {
-		System.out.println("" + cart);
-	}
+	public  static Map<String,Product> cart = new HashMap<String,Product>();
+	public  static Map<String,Order> reuestorderlist = new HashMap<String,Order>();
+	public  static Map<String,Order> orderlist = new HashMap<String,Order>();
+	public  static Map<String,Product> sellproductlist = new HashMap<String,Product>();
+	public  static Map<String,User> userlist = new HashMap<String,User>();
+	
+	
 
 
 
